@@ -12,13 +12,16 @@ public class ReadFile {
     public void ReadFileMethod() throws IOException, SQLException {
 
         try {Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO Måling VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO MålingTest VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
             connection.setAutoCommit(false);
-            Scanner sc = new Scanner(new File("C:/Users/MadMe/IdeaProjects/untitled3/src/USE THIS.csv"));
+            Scanner sc = new Scanner(new File("C:/Users/MadMe/Documents/GitHub/Vejr_data_batch/src/DoneVersion.csv"));
             sc.useDelimiter("[;\n]");
+            int i = 0;
 
             while (sc.hasNext()) {
-                /*System.out.println("1: " + sc.next());
+
+
+               /* System.out.println("1: " + sc.next());
                 System.out.println("2: " + sc.next());
                 System.out.println("3: " + sc.next());
                 System.out.println("4: " + sc.next());
@@ -29,9 +32,9 @@ public class ReadFile {
                 System.out.println("9: " + sc.next());
                 System.out.println("10: " + sc.next());
                 System.out.println("11: " + sc.next());
-                System.out.println("12: " + sc.next());*/
+                System.out.println("12: " + sc.next()); */
 
-                pstmt.setString(1, sc.next());
+                pstmt.setTimestamp(1, Timestamp.valueOf(sc.next()));
                 pstmt.setString(2, sc.next());
                 pstmt.setString(3, sc.next());
                 pstmt.setString(4, sc.next());
@@ -45,6 +48,9 @@ public class ReadFile {
                 pstmt.setString(12, sc.next());
 
                 pstmt.addBatch();
+
+                System.out.println(i++);
+
             }
             sc.close();
             pstmt.executeBatch();
